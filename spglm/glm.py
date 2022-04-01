@@ -375,8 +375,9 @@ class GLMResults(LikelihoodModelResults):
 
     @cache_readonly
     def bic(self):
-        return (self.deviance -
-                (self.model.n - self.df_model - 1) *
+    #To be consistent with statsmodels > 0.13 which uses llf than deviance
+        return (-2 * self.llf +
+                (self.df_model + 1) *
                 np.log(self.model.n))
 
     @cache_readonly
